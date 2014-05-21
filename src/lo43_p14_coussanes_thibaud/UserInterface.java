@@ -23,13 +23,14 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import net.miginfocom.swing.MigLayout;
 
 public class UserInterface extends JFrame{
 	private JTextField textField;
 	private JTextField textField_1;
 	public UserInterface() {
 		
-		this.setTitle("Games Collection");
+		this.setTitle("Map manager");
 	    this.setSize(720, 520);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
@@ -56,51 +57,50 @@ public class UserInterface extends JFrame{
 		
 	    JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.WEST);
-		panel.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("200px"),},
-			new RowSpec[] {
-				FormFactory.NARROW_LINE_GAP_ROWSPEC,
-				RowSpec.decode("22px"),
-				RowSpec.decode("25px"),
-				RowSpec.decode("27px"),
-				RowSpec.decode("25px"),
-				RowSpec.decode("25px"),
-				RowSpec.decode("42px"),
-				RowSpec.decode("121px:grow"),
-				RowSpec.decode("23px"),
-				RowSpec.decode("21px"),}));
+		panel.setLayout(new MigLayout("", "[31.00px][78.00px]", "[27.00px][27.00px][29.00px][26.00px][27.00px][201.00px,grow][26.00px][20.00px][33.00px]"));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		panel.add(lblNewLabel, "1, 3, fill, fill");
+		JLabel lblNewLabel = new JLabel("Départ");
+		panel.add(lblNewLabel, "cell 0 0 2 1");
 		
 		textField = new JTextField();
-		panel.add(textField, "1, 4, fill, fill");
+		panel.add(textField, "cell 0 1 2 1,growx,aligny center");
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		panel.add(lblNewLabel_1, "1, 5, fill, fill");
+		JLabel lblNewLabel_1 = new JLabel("Arrivée");
+		panel.add(lblNewLabel_1, "cell 0 2 2 1");
 		
 		textField_1 = new JTextField();
-		panel.add(textField_1, "1, 6, fill, fill");
+		panel.add(textField_1, "cell 0 3 2 1,growx,aligny center");
 		textField_1.setColumns(10);
 		
-		JButton btnNewButton = new JButton("New button");
-		panel.add(btnNewButton, "1, 7, center, center");
+		JButton btnNewButton_1 = new JButton("Calculer");
+		panel.add(btnNewButton_1, "cell 0 4 2 1,alignx center,aligny center");
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBackground(Color.WHITE);
 		textArea.setEditable(false);
-		panel.add(textArea, "1, 8, fill, fill");
+		panel.add(textArea, "cell 0 5 2 1,grow");
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		panel.add(lblNewLabel_2, "1, 9, fill, fill");
+		JLabel lblNewLabel_2 = new JLabel("100%");
+		panel.add(lblNewLabel_2, "cell 0 6 2 1");
 		
 		JSlider slider = new JSlider();
-		panel.add(slider, "1, 10, fill, fill");
+		panel.add(slider, "cell 0 7 2 1");
+		
+		JButton btnNewButton = new JButton("Réelle");
+		panel.add(btnNewButton, "cell 0 8,alignx center,aligny center");
+		
+		JButton btnNewButton_2 = new JButton("Globale");
+		panel.add(btnNewButton_2, "cell 1 8,alignx center,aligny center");
 		
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JLabel label_8 = new JLabel("");
+		panel_1.add(label_8);
+		
+		JLabel label_5 = new JLabel("");
+		panel_1.add(label_5);
 		
 		this.setVisible(true);
 	}
@@ -109,5 +109,4 @@ public class UserInterface extends JFrame{
 		// TODO Auto-generated method stub
 		UserInterface ui=new UserInterface();
 	}
-
 }
