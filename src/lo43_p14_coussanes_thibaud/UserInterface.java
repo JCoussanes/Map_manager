@@ -42,7 +42,7 @@ public class UserInterface extends JFrame{
 	    JMenuItem mntmNewMenuItem = new JMenuItem("patate");
 	    mnFichier.add(mntmNewMenuItem);
 	    
-	    JMenuItem mntmNewMenuItem_1 = new JMenuItem("New menu item");
+	    JMenuItem mntmNewMenuItem_1 = new JMenuItem("tomate");
 	    mnFichier.add(mntmNewMenuItem_1);
 	    
 	    JMenuItem mntmNewMenuItem_2 = new JMenuItem("New menu item");
