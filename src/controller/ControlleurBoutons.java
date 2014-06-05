@@ -26,7 +26,5 @@ public class ControlleurBoutons implements ActionListener{
 		else if(source==boutonGrosPlan){app.modifierZoom(Application.ZOOM_MAX);}
 			
 		
-		}
 	}
-
 }
