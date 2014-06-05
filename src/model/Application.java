@@ -149,7 +149,7 @@ public class Application {
 			}
 		}
 	}
-	
+	//Droum cette méthode fait un semblant de ce que tu voulais faire pour entrer départ et arrivée
 	public void remplirListesRoutes(rueFlag filtre, PanelControles.jcbFlag flag) {
 		Object[] listeRoutes = reseau_routier.getListeRoutes().toArray();
 		Arrays.sort(listeRoutes);
