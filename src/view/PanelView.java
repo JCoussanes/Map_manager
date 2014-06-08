@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.JPanel;
 
+import controller.ControlleurScrollBar;
+
 public class PanelView extends JPanel{
 
 	public Carte getCarte() {
@@ -25,6 +27,12 @@ public class PanelView extends JPanel{
 	}
 
 	public void deplacerCarte(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void ajouterEcouteurScrollBar(
+			ControlleurScrollBar controlleur_scroll_bar) {
 		// TODO Auto-generated method stub
 		
 	}

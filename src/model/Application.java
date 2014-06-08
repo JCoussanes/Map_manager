@@ -248,6 +248,7 @@ public class Application {
 		recentrerVue(ptCentre);
 	}
 	
+	
 	public void lireComboboxPourRechercheItineraire() {
 		// Lecture de la demande de l'utilisateur
 		setDepart(fenetre.getPanneauControles().getNumPoint(PanelControles.jcbFlag.DEPART));
@@ -589,7 +590,7 @@ public class Application {
 
 	public void determinerZoomGlobal() {
 		float i=ZOOM_MAX;
-		int largeurMin =(int) fenetrne.getPanneauVue().getViewport().getViewSize().getWidth();
+		int largeurMin =(int) fenetre.getPanneauVue().getViewport().getViewSize().getWidth();
 		int hauteurMin =(int) fenetre.getPanneauVue().getViewport().getViewSize().getHeight();
 		int largeurCarte = fenetre.getPanneauVue().getCarte().getLargeur();
 		int hauteurCarte = fenetre.getPanneauVue().getCarte().getHauteur();

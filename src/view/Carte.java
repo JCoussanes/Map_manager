@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
 
+import controller.ControlleurCarte;
+import controller.ControlleurMenuContextuel;
+
 public class Carte {
 
 	public void setTailleEchelle(int eCHELLE_TAILLE) {
@@ -94,6 +97,17 @@ public class Carte {
 	public int getHauteur() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void ajouterEcouteurMenu(
+			ControlleurMenuContextuel controlleur_menu_contextuel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void ajouterEcouteurCarte(ControlleurCarte controlleur_carte) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
