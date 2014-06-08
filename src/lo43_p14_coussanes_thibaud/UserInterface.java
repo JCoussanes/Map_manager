@@ -63,7 +63,7 @@ public class UserInterface extends JFrame{
 	    JButton btnTrue = new JButton("Réelle");
 	    JButton btnGlobal = new JButton("Globale");
 	    	//Map view panel
-	    JPanel mapPanel = new JPanel();
+	    MapView mapPanel = new MapView();
 	    
 	    
 	    //Graphic interface element settings
