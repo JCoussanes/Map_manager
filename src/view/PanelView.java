@@ -4,7 +4,12 @@ import javax.swing.JPanel;
 
 import controller.ControlleurScrollBar;
 
+
 public class PanelView extends JPanel{
+	public PanelView() {
+		
+		
+	}
 
 	public Carte getCarte() {
 		// TODO Auto-generated method stub
@@ -36,5 +41,4 @@ public class PanelView extends JPanel{
 		// TODO Auto-generated method stub
 		
 	}
-
 }
