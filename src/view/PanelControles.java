@@ -17,42 +17,28 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import view.PanelControles.jcbFlag;
-
 public class PanelControles extends JPanel {
 	public enum jcbFlag {BOTH, DEPART, ARRIVEE}
 
-	JButton boutonMoins = new JButton("-");
+	private JButton boutonMoins = new JButton("-");
+	private JSlider slider = new JSlider();
+	private JButton boutonPlus = new JButton("+");
+	private JComboBox rueDepart = new JComboBox();
+	private JComboBox rueArrive = new JComboBox();
+	private JButton boutonOk = new JButton("OK");
+	private JButton boutonReel = new JButton("Vue Réelle");
+	private JButton boutonGlobal = new JButton("Vue Globale");
+	private JButton boutonGrosPlan = new JButton("Gros plan");
+	private JComboBox villeDepart = new JComboBox();
+	private JComboBox villeArrive = new JComboBox();
+	private JLabel lblZoom = new JLabel("Zoom");
+	private JLabel lblVilleDeDpart = new JLabel("Ville de départ");
+	private JLabel lblRueDeDpart = new JLabel("Rue de départ");
+	private JLabel lblVilleDarrve = new JLabel("Ville d'arrvée");
+	private JLabel lblRueDarrive = new JLabel("Rue d'arrivée");
 	
-	JSlider slider = new JSlider();
-	
-	JButton boutonPlus = new JButton("+");
-	
-	JComboBox rueDepart = new JComboBox();
-	
-	JComboBox rueArrive = new JComboBox();
-	
-	JButton boutonOk = new JButton("OK");
-	
-	JButton boutonReel = new JButton("Vue Réelle");
-	
-	JButton boutonGlobal = new JButton("Vue Globale");
-	
-	JButton boutonGrosPlan = new JButton("Gros plan");
-	
-	JComboBox villeDepart = new JComboBox();
-	
-	JComboBox villeArrive = new JComboBox();
-	
-	JLabel lblZoom = new JLabel("Zoom");
-	
-	JLabel lblVilleDeDpart = new JLabel("Ville de départ");
-	
-	JLabel lblRueDeDpart = new JLabel("Rue de départ");
-	
-	JLabel lblVilleDarrve = new JLabel("Ville d'arrvée");
-	
-	JLabel lblRueDarrive = new JLabel("Rue d'arrivée");
+	private Vector<Integer> stPoints, enPoints; 
+
 	public PanelControles(){
 		
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -161,115 +147,161 @@ public class PanelControles extends JPanel {
 		
 	}
 
-	public void ajouterVilleDansCombobox(String toutes) {
-		// TODO Auto-generated method stub
+	public void ajouterVilleDansCombobox(String ville) {
 		
+		villeDepart.addItem(ville);
+		villeArrive.addItem(ville);
 	}
 
 	public boolean villeDejaPresente(String ville) {
-		// TODO Auto-generated method stub
+
+		for(int i=0; i<villeDepart.getItemCount(); i++){
+			if(ville==villeDepart.getItemAt(i))
+				return true;
+		}
 		return false;
 	}
 
 	public void setSliderValue(int i) {
-		// TODO Auto-generated method stub
+
 		slider.setValue(i);
 	}
 
 	public void ajouterEcouteurAuBoutonOk(ControlleurBoutons controlleur_boutons) {
-		// TODO Auto-generated method stub
+
 		boutonOk.addActionListener(controlleur_boutons);
 	}
 
 	public void ajouterEcouteurAuBoutonZoomMoins(
 			ControlleurBoutons controlleur_boutons) {
-		// TODO Auto-generated method stub
+
 		boutonMoins.addActionListener(controlleur_boutons);
 		
 	}
 
 	public void ajouterEcouteurAuBoutonZoomPlus(
 			ControlleurBoutons controlleur_boutons) {
-		// TODO Auto-generated method stub
+
 		boutonPlus.addActionListener(controlleur_boutons);
 		
 	}
 
 	public void ajouterEcouteurAuBoutonZoomReel(
 			ControlleurBoutons controlleur_boutons) {
-		// TODO Auto-generated method stub
+
 		boutonReel.addActionListener(controlleur_boutons);
 	}
 
 	public void ajouterEcouteurAuBoutonZoomGlobal(
 			ControlleurBoutons controlleur_boutons) {
-		// TODO Auto-generated method stub
+
 		boutonGlobal.addActionListener(controlleur_boutons);
 	}
 
 	public void ajouterEcouteurAuBoutonZoomGrosPlan(
 			ControlleurBoutons controlleur_boutons) {
-		// TODO Auto-generated method stub
+
 		boutonGrosPlan.addActionListener(controlleur_boutons);
 	}
 
 	public void ajouterEcouteurAuSlider(ControlleurSlider controlleur_slider) {
-		// TODO Auto-generated method stub
+
 		slider.addChangeListener(controlleur_slider);
 	}
 
 	public void ajouterEcouteurVilleDepart(
 			ControlleurComboBox controlleur_combo_box) {
-		// TODO Auto-generated method stub
+
 		villeDepart.addActionListener(controlleur_combo_box);
 	}
 
 	public void ajouterEcouteurVilleArrivee(
 			ControlleurComboBox controlleur_combo_box) {
-		// TODO Auto-generated method stub
+
 		villeArrive.addActionListener(controlleur_combo_box);
 	}
 
 	public void ajouterEcouteurRueDepart(
 			ControlleurComboBox controlleur_combo_box) {
-		// TODO Auto-generated method stub
+
 		rueDepart.addActionListener(controlleur_combo_box);
 	}
 
 	public void ajouterEcouteurRueArrivee(
 			ControlleurComboBox controlleur_combo_box) {
-		// TODO Auto-generated method stub
+
 		rueArrive.addActionListener(controlleur_combo_box);
 	}
 
-	public int getNumPoint(jcbFlag depart) {
-		// TODO Auto-generated method stub
+	public int getNumPoint(jcbFlag flag) {
+
+		if(flag==jcbFlag.DEPART)
+			return stPoints.get(0);
+		else if(flag==jcbFlag.ARRIVEE)
+			return enPoints.get(1);
 		return 0;
 	}
 
 	public String getNomVille(jcbFlag flag) {
-		// TODO Auto-generated method stub
+
+		if(flag==jcbFlag.DEPART)
+			return (String) villeDepart.getSelectedItem();
+		else if(flag==jcbFlag.ARRIVEE)
+			return (String)villeArrive.getSelectedItem();
 		return null;
 	}
 
 	public void setPoints(jcbFlag flag, Vector<Integer> liste_points) {
-		// TODO Auto-generated method stub
-		
+
+		if(flag==jcbFlag.DEPART)
+			stPoints=liste_points;
+		else if(flag==jcbFlag.ARRIVEE)
+			enPoints=liste_points;
 	}
 
 	public String getNomRoute(jcbFlag flag) {
-		// TODO Auto-generated method stub
-		return null;
+
+		switch(flag){
+		case DEPART:
+			return (String) rueDepart.getSelectedItem();
+		case ARRIVEE:
+			return (String) rueArrive.getSelectedItem();
+		default:
+			return null;
+		}
 	}
 
-	public void ajouterRouteDansCombobox(String string, jcbFlag flag) {
-		// TODO Auto-generated method stub
+	public void ajouterRouteDansCombobox(String rue, jcbFlag flag) {
 		
+		switch(flag){
+			case DEPART:
+				rueDepart.addItem(rue);
+				
+				break;
+			case ARRIVEE:
+				rueArrive.addItem(rue);
+				break;
+			case BOTH:
+				rueDepart.addItem(rue);
+				rueArrive.addItem(rue);
+				break;
+		}
 	}
 
 	public void viderRueComboBox(jcbFlag flag) {
-		// TODO Auto-generated method stub
 		
+		switch(flag){
+		case DEPART:
+			rueDepart.removeAllItems();			
+			break;
+		case ARRIVEE:
+			rueArrive.removeAllItems();
+			break;
+		case BOTH:
+			rueDepart.removeAllItems();
+			rueArrive.removeAllItems();
+			break;
+		}
 	}
 
 }
