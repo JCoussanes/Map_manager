@@ -13,6 +13,7 @@ import static java.lang.Math.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
+import javax.swing.JFrame;
 
 import view.*;
 import controller.*;
@@ -61,6 +62,8 @@ public class Application {
 	private PlusCourtChemin plus_court_chemin;
 	private Vector<EtatReseau> chemin;
 	
+	public boolean first;
+	
 	// Point le plus proche de la souris
 	private int point_proche_souris = -1;
 	
@@ -73,6 +76,7 @@ public class Application {
 	private float old_zoom = ZOOM_INITIAL;
 	
 	public Application(String fichierXml) {
+		first=false;
 		// Construction des diff�rents �l�ments de l'application
 		reseau_routier = new ReseauRoutier();
 		reseau_routier.parseXml(fichierXml);
@@ -195,6 +199,7 @@ public class Application {
 		Object[] listeRoutes = reseau_routier.getListeRoutes().toArray();
 		Arrays.sort(listeRoutes);
 	
+		System.out.println(filtre);
 		// Reinitialisation de la comboBox
 		fenetre.getPanneauControles().viderRueComboBox(flag);
 		
@@ -203,6 +208,25 @@ public class Application {
 			NomRue rue = new NomRue(listeRoutes[l]);
 			if( rue.extraireNomVille().equals(filtre)) {
 				fenetre.getPanneauControles().ajouterRouteDansCombobox(listeRoutes[l].toString(),flag);
+			}
+			else if (filtre.equalsIgnoreCase((String)Application.TOUTES)){
+				fenetre.getPanneauControles().ajouterRouteDansCombobox(listeRoutes[l].toString(),flag);
+			}
+			else if (filtre.equalsIgnoreCase((String)Application.AUTOROUTE)){
+				if(rue.estUneAutoroute())
+					fenetre.getPanneauControles().ajouterRouteDansCombobox(listeRoutes[l].toString(),flag);
+			}
+			else if (filtre.equalsIgnoreCase((String)Application.EUROPEENNE)){
+				if(rue.estUneEuropeenne())
+					fenetre.getPanneauControles().ajouterRouteDansCombobox(listeRoutes[l].toString(),flag);
+			}
+			else if (filtre.equalsIgnoreCase((String)Application.NATIONALE)){
+				if(rue.estUneNationale())
+					fenetre.getPanneauControles().ajouterRouteDansCombobox(listeRoutes[l].toString(),flag);
+			}
+			else if (filtre.equalsIgnoreCase((String)Application.DEPARTEMENTALE)){
+				if(rue.estUneDepartementale())
+					fenetre.getPanneauControles().ajouterRouteDansCombobox(listeRoutes[l].toString(),flag);
 			}
 		}
 	}
@@ -431,6 +455,7 @@ public class Application {
 		else {
 			pourcentage_zoom += mod;
 		}
+		
 		setZoom();
 	}
 	
@@ -438,6 +463,7 @@ public class Application {
 		if (pourcentage_zoom > ZOOM_MAX) pourcentage_zoom = ZOOM_MAX;
 		if (pourcentage_zoom < ZOOM_MIN) pourcentage_zoom = ZOOM_MIN;
 		if (old_zoom != pourcentage_zoom) {
+			first=true;
 			fenetre.getPanneauInfos().updateZoom(pourcentage_zoom);
 			fenetre.getPanneauVue().getCarte().updateZoom(pourcentage_zoom);
 			fenetre.getPanneauVue().getCarte().setMaxUnitIncrement(pourcentage_zoom);
@@ -599,7 +625,11 @@ public class Application {
 			i-=0.01;
 		pourcentage_zoom = i;
 		
+		pourcentage_zoom=0;
 		setZoom();
 	}
 	
+	public static void main(String[] args) {
+		Application app=new Application("region_belfort_streets.xml");
+	}
 }

@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+
 public class PanelControles extends JPanel {
 	public enum jcbFlag {BOTH, DEPART, ARRIVEE}
 
@@ -40,6 +41,17 @@ public class PanelControles extends JPanel {
 	private Vector<Integer> stPoints, enPoints; 
 
 	public PanelControles(){
+		boutonMoins.setName("boutonMoins");
+		slider.setName("slider");
+		boutonPlus.setName("boutonPlus");
+		rueDepart.setName("rueDepart");
+		rueArrive.setName("rueArrive");
+		boutonOk.setName("boutonOk");
+		boutonReel.setName("boutonReel");
+		boutonGlobal.setName("boutonGlobal");
+		boutonGrosPlan.setName("boutonGrosPlan");
+		villeDepart.setName("villeDepart");
+		villeArrive.setName("villeArrive");
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -153,13 +165,15 @@ public class PanelControles extends JPanel {
 		villeArrive.addItem(ville);
 	}
 
-	public boolean villeDejaPresente(String ville) {
-
+	public boolean villeDejaPresente(String str) {
+		boolean res=false;
+		String tmp;
 		for(int i=0; i<villeDepart.getItemCount(); i++){
-			if(ville==villeDepart.getItemAt(i))
-				return true;
+			tmp=(String) villeDepart.getItemAt(i);
+			if(str.equalsIgnoreCase(tmp))
+				res=true;
 		}
-		return false;
+		return res;
 	}
 
 	public void setSliderValue(int i) {
@@ -303,5 +317,6 @@ public class PanelControles extends JPanel {
 			break;
 		}
 	}
-
+	
+	
 }

@@ -10,55 +10,19 @@ import javax.swing.JSlider;
 import javax.swing.JButton;
 
 public class Fenetre extends JFrame{
-
+	PanelControles panneauControles;
+	
 	public Fenetre(String lienCarte, String SYSTEME_UNITE)  {
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		
-		PanelControles PanneauControl = new PanelControles();
-		getContentPane().add(PanneauControl, BorderLayout.WEST);
-		PanneauControl.setLayout(new GridLayout(0, 1, 50, 0));
-		
-		JComboBox comboBox = new JComboBox();
-		PanneauControl.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		PanneauControl.add(comboBox_1);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		PanneauControl.add(comboBox_2);
-		
-		JComboBox comboBox_3 = new JComboBox();
-		PanneauControl.add(comboBox_3);
-		
-		JSlider slider = new JSlider();
-		PanneauControl.add(slider);
-		
-		JButton boutonOk = new JButton("New button");
-		PanneauControl.add(boutonOk);
-		
-		JButton boutonMoins = new JButton("New button");
-		PanneauControl.add(boutonMoins);
-		
-		JButton boutonPlus = new JButton("New button");
-		PanneauControl.add(boutonPlus);
-		
-		JButton boutonReel = new JButton("New button");
-		PanneauControl.add(boutonReel);
-		
-		JButton boutonGlobal = new JButton("New button");
-		PanneauControl.add(boutonGlobal);
-		
-		JButton boutonGrosPlan = new JButton("New button");
-		PanneauControl.add(boutonGrosPlan);
-		
-		JPanel panneauVue = new JPanel();
-		getContentPane().add(panneauVue, BorderLayout.CENTER);
+		setSize(720, 520);
+		panneauControles=new PanelControles();
+		getContentPane().add(panneauControles, BorderLayout.CENTER);
+		setVisible(true);
 		
 	}
 
 	public PanelControles getPanneauControles() {
-		// TODO Auto-generated method stub
-		return null;
+		return panneauControles;
 	}
 
 	public PanelView getPanneauVue() {
