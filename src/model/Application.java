@@ -601,7 +601,5 @@ public class Application {
 		setZoom();
 	}
 	
-	public static void main(String[] args) {
 	
-	}
 }

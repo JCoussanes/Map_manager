@@ -1,16 +1,27 @@
 package view;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class PanelView extends JPanel{
+	
+	private Carte carteRegion;
+	private viewPort espaceVue;
+	
+	public PanelView(String lienCarte)
+	{
+		espaceVue=new viewPort();
+		carteRegion=new Carte(lienCarte);
+		this.add(carteRegion);
+	}
 
 	public Carte getCarte() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return carteRegion;
 	}
 
 	public int resituerX(int minx) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
@@ -20,12 +31,13 @@ public class PanelView extends JPanel{
 	}
 
 	public viewPort getViewport() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return espaceVue;
 	}
 
 	public void deplacerCarte(int x, int y) {
-		// TODO Auto-generated method stub
+		this.setAlignmentX(x);
+		this.setAlignmentY(y);
 		
 	}
 

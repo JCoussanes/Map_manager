@@ -2,73 +2,62 @@ package view;
 
 
 import javax.swing.JFrame;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
+
 import java.awt.GridLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 
 public class Fenetre extends JFrame{
 
+	private static final String SYSTEME_UNITE = null;
+	
+	private PanelControles panneauControl;
+	private PanelView panneauVue;
+	private PanelInfo panneauInfo;
+
 	public Fenetre(String lienCarte, String SYSTEME_UNITE)  {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		PanelControles PanneauControl = new PanelControles();
-		getContentPane().add(PanneauControl, BorderLayout.WEST);
-		PanneauControl.setLayout(new GridLayout(0, 1, 50, 0));
+		panneauControl = new PanelControles();
+		getContentPane().add(panneauControl, BorderLayout.WEST);
+		panneauControl.setLayout(new GridLayout(0, 1, 50, 0));
 		
-		JComboBox comboBox = new JComboBox();
-		PanneauControl.add(comboBox);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		PanneauControl.add(comboBox_1);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		PanneauControl.add(comboBox_2);
-		
-		JComboBox comboBox_3 = new JComboBox();
-		PanneauControl.add(comboBox_3);
-		
-		JSlider slider = new JSlider();
-		PanneauControl.add(slider);
-		
-		JButton boutonOk = new JButton("New button");
-		PanneauControl.add(boutonOk);
-		
-		JButton boutonMoins = new JButton("New button");
-		PanneauControl.add(boutonMoins);
-		
-		JButton boutonPlus = new JButton("New button");
-		PanneauControl.add(boutonPlus);
-		
-		JButton boutonReel = new JButton("New button");
-		PanneauControl.add(boutonReel);
-		
-		JButton boutonGlobal = new JButton("New button");
-		PanneauControl.add(boutonGlobal);
-		
-		JButton boutonGrosPlan = new JButton("New button");
-		PanneauControl.add(boutonGrosPlan);
-		
-		JPanel panneauVue = new JPanel();
+		panneauVue = new PanelView(lienCarte);
 		getContentPane().add(panneauVue, BorderLayout.CENTER);
 		
+		panneauInfo = new PanelInfo();
+		getContentPane().add(panneauInfo, BorderLayout.EAST);
+		
+		
 	}
 
-	public PanelControles getPanneauControles() {
-		// TODO Auto-generated method stub
-		return null;
+	public PanelControles getPanneauControles() 
+	{
+		return panneauControl ;
+		
 	}
 
-	public PanelView getPanneauVue() {
-		// TODO Auto-generated method stub
-		return null;
+	public PanelView getPanneauVue() 
+	{		
+		return panneauVue;
 	}
 
-	public PanelInfo getPanneauInfos() {
-		// TODO Auto-generated method stub
-		return null;
+	public PanelInfo getPanneauInfos() 
+	{
+		return panneauInfo;
 	}
-
+	
+	public static void main(String args[])
+	{
+		String lienCarte = "toto";
+		Fenetre fenetre = new Fenetre(lienCarte, SYSTEME_UNITE);
+		fenetre.setVisible(true);
+	}
 }
