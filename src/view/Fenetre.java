@@ -28,8 +28,7 @@ public class Fenetre extends JFrame{
 		setSize(720, 520);
 		
 		panneauControles = new PanelControles();
-		getContentPane().add(panneauControles, BorderLayout.WEST);
-		panneauControles.setLayout(new GridLayout(0, 1, 50, 0));
+		getContentPane().add(panneauControles, BorderLayout.SOUTH);
 		
 		panneauVue = new PanelView(lienCarte);
 		getContentPane().add(panneauVue, BorderLayout.CENTER);
