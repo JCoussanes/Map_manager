@@ -3,7 +3,10 @@ package view;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 import controller.ControlleurBoutons;
 import controller.ControlleurComboBox;
@@ -19,6 +22,7 @@ import javax.swing.JLabel;
 
 
 public class PanelControles extends JPanel {
+
 	public enum jcbFlag {BOTH, DEPART, ARRIVEE}
 
 	private JButton boutonMoins = new JButton("-");
@@ -147,6 +151,7 @@ public class PanelControles extends JPanel {
 		);
 		setLayout(groupLayout);	
 	
+
 	}
 
 	public void setIconZoomMoins(ImageIcon imageIcon) {

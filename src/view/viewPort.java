@@ -5,26 +5,28 @@ import java.awt.Point;
 
 public class viewPort {
 
+	private Point viewPosition;
+	
 
 	public void setViewPosition(Point point) {
-		// TODO Auto-generated method stub
+		viewPosition=point;
 		
 	}
 
 	public Dimension getSize() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.getSize();
 	}
 
 	public Point getViewPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return viewPosition;
 	}
 
 
 	public Dimension getViewSize() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.getViewSize();
 	}
 
 }
