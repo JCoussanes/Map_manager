@@ -56,7 +56,7 @@ public class Fenetre extends JFrame{
 	
 	public static void main(String args[])
 	{
-		String lienCarte = "./region_belfort_routes_fleuves_habitats.gif";
+		String lienCarte = "region_belfort_routes_fleuves_habitats.gif";
 		Fenetre fenetre = new Fenetre(lienCarte, SYSTEME_UNITE);
 		fenetre.setVisible(true);
 	}

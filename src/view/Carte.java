@@ -40,6 +40,7 @@ public class Carte extends JLabel {
 		this.setIcon(lienCarte);
 		ensemblePoint=new ArrayList<Point>();
 		System.out.println(lienCarte);
+		this.repaint();
 		menu=new JPopupMenu();
 	
 	}
