@@ -573,9 +573,9 @@ public class Application {
 			return "tout_droit";
 	}
 	
-	public void changerAntiAliasing() {
-		fenetre.getPanneauVue().getCarte().changerAntiAliasing();
-	}
+	//public void changerAntiAliasing() {
+		//fenetre.getPanneauVue().getCarte().changerAntiAliasing();
+	//}
 	
 	private void setDepart(int d) {
 		depart = d;

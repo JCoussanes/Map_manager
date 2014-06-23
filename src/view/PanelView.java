@@ -11,7 +11,8 @@ public class PanelView extends JPanel{
 	public PanelView(String lienCarte)
 	{
 		espaceVue=new viewPort();
-		carteRegion=new Carte(lienCarte);
+		ImageIcon imgCarte =new ImageIcon(lienCarte);
+		carteRegion=new Carte(imgCarte);
 		this.add(carteRegion);
 	}
 

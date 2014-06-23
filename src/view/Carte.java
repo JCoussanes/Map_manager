@@ -35,10 +35,11 @@ public class Carte extends JLabel {
 	
 	private boolean pointUnique;
 	
-	public Carte(String lienCarte)
+	public Carte(ImageIcon lienCarte)
 	{
-		this.setIcon(new ImageIcon(lienCarte));
+		this.setIcon(lienCarte);
 		ensemblePoint=new ArrayList<Point>();
+		System.out.println(lienCarte);
 		menu=new JPopupMenu();
 	
 	}
@@ -136,14 +137,14 @@ public class Carte extends JLabel {
 		menu.setVisible(false);
 	}
 
-	public void changerAntiAliasing() 
+	/*public void changerAntiAliasing() 
 	{
 		java.awt.Graphics2D g2 = (java.awt.Graphics2D);
 		    RenderingHints rh = new RenderingHints(
 		             RenderingHints.KEY_TEXT_ANTIALIASING,
 		             RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		    g2.setRenderingHints(rh);
-	}
+	}*/
 
 	public int getLargeur() {
 		

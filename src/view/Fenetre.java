@@ -18,16 +18,16 @@ public class Fenetre extends JFrame{
 
 	private static final String SYSTEME_UNITE = null;
 	
-	private PanelControles panneauControl;
+	private PanelControles panneauControles;
 	private PanelView panneauVue;
 	private PanelInfo panneauInfo;
 
 	public Fenetre(String lienCarte, String SYSTEME_UNITE)  {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		panneauControl = new PanelControles();
-		getContentPane().add(panneauControl, BorderLayout.WEST);
-		panneauControl.setLayout(new GridLayout(0, 1, 50, 0));
+		panneauControles = new PanelControles();
+		getContentPane().add(panneauControles, BorderLayout.WEST);
+		panneauControles.setLayout(new GridLayout(0, 1, 50, 0));
 		
 		panneauVue = new PanelView(lienCarte);
 		getContentPane().add(panneauVue, BorderLayout.CENTER);
@@ -40,7 +40,7 @@ public class Fenetre extends JFrame{
 
 	public PanelControles getPanneauControles() 
 	{
-		return panneauControl ;
+		return panneauControles ;
 		
 	}
 
@@ -56,7 +56,7 @@ public class Fenetre extends JFrame{
 	
 	public static void main(String args[])
 	{
-		String lienCarte = "toto";
+		String lienCarte = "./region_belfort_routes_fleuves_habitats.gif";
 		Fenetre fenetre = new Fenetre(lienCarte, SYSTEME_UNITE);
 		fenetre.setVisible(true);
 	}
