@@ -68,7 +68,7 @@ public class Application {
 	private int point_proche_souris = -1;
 	
 	//Point au centre de l'ecran (memorise en coord taille reelle)
-	private Point ptCentre = new Point(-1, -1);
+	private Point ptCentre;
 	
 	// Num�ros des points de d�part et d'arriv�e
 	private int depart = -1, arrivee = -1;
@@ -82,7 +82,6 @@ public class Application {
 		reseau_routier.parseXml(fichierXml);
 		
 		lienCarte = DOSSIER_IMAGES + reseau_routier.getNomFichierImage();
-		new ImageIcon(lienCarte);
 		
 		controlleur_boutons = new ControlleurBoutons(this);
 		controlleur_slider = new ControlleurSlider(this);
@@ -100,18 +99,19 @@ public class Application {
 		
 		// Initialisations des diff�rents �l�ments
 		fenetre.getPanneauVue().getCarte().setTailleEchelle(ECHELLE_TAILLE);
-		miseEnPlaceImages();
+		
 		remplirListesVilles();
 		remplirListesRoutes(rueFlag.TOUTES, PanelControles.jcbFlag.BOTH);
 		miseEnPlaceEcouteurs();
 		initialiserListesPoints();
+		
+		int xi=(int)((float)fenetre.getPanneauVue().getCarte().getLargeur()/2), xv=fenetre.getPanneauVue().getViewport().getWidth()/2,nx=(xi-xv);
+		int yi=(int)((float)fenetre.getPanneauVue().getCarte().getHauteur()/2), yv=fenetre.getPanneauVue().getViewport().getHeight()/2,ny=(yi-yv);
+		
+		fenetre.getPanneauVue().getViewport().setViewPosition(ptCentre=new Point(nx,ny));
+		
 		updateCentre();
 		afficherCarte();
-	}
-	
-	private void miseEnPlaceImages() {
-		fenetre.getPanneauControles().setIconZoomMoins(new ImageIcon(DOSSIER_IMAGES + "loupe_moins.gif"));
-		fenetre.getPanneauControles().setIconZoomPlus(new ImageIcon(DOSSIER_IMAGES + "loupe_plus.gif"));
 	}
 	
 	private void miseEnPlaceEcouteurs() {
@@ -285,6 +285,7 @@ public class Application {
 	private void chercherItineraire() {
 		// R�soue l'itin�raire et ajoute les points � la carte
 		fenetre.getPanneauVue().getCarte().viderPoints();
+		fenetre.getPanneauVue().getCarte().drawPath();
 		if (depart == arrivee) {
 			fenetre.getPanneauInfos().setMessage("Erreur !", "Veuillez choisir 2 points diff\u00e9rents !");
 			setDepart(arrivee);
@@ -365,7 +366,7 @@ public class Application {
 	
 	private void repositionnerVue() {
 		if (chemin.size() > 1) {
-			// Cherche le rectangle occup�
+			// Cherche le rectangle occupé
 			int minx = 100000, miny = 100000, maxx = 0, maxy = 0;
 			EtatReseau pos;
 			Point pt;
@@ -405,10 +406,9 @@ public class Application {
 			// Recentrage de la vue
 			minx = (int)((minx * pourcentage_zoom) - (taille_ecran.getWidth() - largeur*pourcentage_zoom) / 2);
 			miny = (int)((miny * pourcentage_zoom) - (taille_ecran.getHeight() - hauteur*pourcentage_zoom) / 2);
-			minx = fenetre.getPanneauVue().resituerX(minx);
-			miny = fenetre.getPanneauVue().resituerY(miny);
 			
 			fenetre.getPanneauVue().getViewport().setViewPosition(new Point(minx, miny));
+			fenetre.getPanneauVue().getCarte().repaint();
 		}
 	}
 	
@@ -419,27 +419,31 @@ public class Application {
 	
 	//memorise le point centre de l'ecran.
 	public void updateCentre() {
-		//On conserve le point au centre de l'�cran
+			//On conserve le point au centre de l'écran
 		Dimension dim = fenetre.getPanneauVue().getViewport().getSize();
 		Point coin = new Point(fenetre.getPanneauVue().getViewport().getViewPosition());
-		ptCentre = new Point((int)((coin.getX()/pourcentage_zoom) + dim.getWidth()/(2*pourcentage_zoom)), (int)((coin.getY()/pourcentage_zoom) + dim.getHeight()/(2*pourcentage_zoom)));
+		ptCentre = new Point((int)((coin.getX()) + dim.getWidth()/2), (int)((coin.getY()) + dim.getHeight()/2));
 	}
 
 	//Positionne la vue sur le pt pass� en param (generalement ptCentre)
 	public void recentrerVue(Point pt) {
-		//Mise en m�moire du point Centre
+		//Mise en mémoire du point Centre
 		ptCentre = pt;
 		
-		//centrage de la vue sur le point
-		Dimension dim = fenetre.getPanneauVue().getViewport().getSize();
+		//coordonn�es du centre du ScrollPane
+		int xCentre=fenetre.getPanneauVue().getSize().width/2;
+		int yCentre=fenetre.getPanneauVue().getSize().height/2;
+
+		//coordonn�es du point de la carte se trouvant au centre du ScrollPane
+		int _x=(int)((fenetre.getPanneauVue().getViewport().getViewPosition().x+xCentre)/old_zoom);
+		int _y=(int)((fenetre.getPanneauVue().getViewport().getViewPosition().y+yCentre)/old_zoom);
 		
-		int newX = (int)((float)pt.getX() * pourcentage_zoom) - (int)((float)dim.getWidth()/(float)2);
-		int newY = (int) ((float)pt.getY() * pourcentage_zoom) - (int)((float)dim.getHeight()/(float)2);
+		System.out.println(pt.toString());
+		//newX = fenetre.getPanneauVue().resituerX(newX);
+		//newY = fenetre.getPanneauVue().resituerY(newY);
 		
-		newX = fenetre.getPanneauVue().resituerX(newX);
-		newY = fenetre.getPanneauVue().resituerY(newY);
-		
-		fenetre.getPanneauVue().getViewport().setViewPosition(new java.awt.Point(newX,newY));
+		fenetre.getPanneauVue().getViewport().setViewPosition(new java.awt.Point((int)(_x*fenetre.getPanneauVue().getCarte().getZoom()-xCentre),(int)(_y*fenetre.getPanneauVue().getCarte().getZoom()-yCentre)));
+		fenetre.getPanneauVue().getCarte().repaint();
 	}
 	
 	public float getZoom() {
@@ -464,15 +468,18 @@ public class Application {
 		if (pourcentage_zoom < ZOOM_MIN) pourcentage_zoom = ZOOM_MIN;
 		if (old_zoom != pourcentage_zoom) {
 			first=true;
+			
+			
 			fenetre.getPanneauInfos().updateZoom(pourcentage_zoom);
 			fenetre.getPanneauVue().getCarte().updateZoom(pourcentage_zoom);
 			fenetre.getPanneauVue().getCarte().setMaxUnitIncrement(pourcentage_zoom);
 			fenetre.getPanneauControles().setSliderValue((int) (pourcentage_zoom*100));
 			plus_court_chemin.init(reseau_routier, pourcentage_zoom);
+
 			afficherCarte();
-			chercherItineraire();
-			point_proche_souris = -1;
-			fenetre.getPanneauVue().getCarte().setPointProche(new Point(-1, -1));
+			//fenetre.getPanneauVue().getCarte().repaint();
+			//chercherItineraire();
+			
 		}
 	}
 	
@@ -514,7 +521,7 @@ public class Application {
 		if (!pointProchePrecedent.equals(pointProche)) {
 			// On ne redessine que si le point change
 			point_proche_souris = idPointProche;
-			fenetre.getPanneauVue().getCarte().cacherMenu();
+
 			fenetre.getPanneauVue().getCarte().setPointProche(pointProche);
 			// Affichage des coordonnees du point
 			Point nouvelles_coords = getLambertCoords(reseau_routier.getPoint(idPointProche));
@@ -547,7 +554,7 @@ public class Application {
 	}
 	
 	public void afficherMenuContextuel() {
-		fenetre.getPanneauVue().getCarte().afficherMenu();
+
 	}
 	
 	public void setPointProcheDepart() {
@@ -563,7 +570,7 @@ public class Application {
 	}
 	
 	public void cacherMenuCarte() {
-		fenetre.getPanneauVue().getCarte().cacherMenu();
+
 	}
 	
 	private Point getLambertCoords(Point pt_pixels) {

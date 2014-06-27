@@ -353,7 +353,7 @@ public class PlusCourtChemin {
 
     public void init(ReseauRoutier res, float z) {
       reseau = res;
-      zoom = z;
+      zoom = 1;
       n = reseau.getNombrePoints();
       m = reseau.getNombreConnexions();
       v = new Node[n];

@@ -1,18 +1,22 @@
 package view;
 
+
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
-
 
 import controller.ControlleurCarte;
 import controller.ControlleurMenuContextuel;
 
-
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
@@ -22,6 +26,9 @@ public class Carte extends JLabel {
 	private int echelleTaille;
 	private int hauteur;
 	private int largeur;
+	private float x;
+	private float y;
+	
 	
 	private float zoom;
 	private float coefZoom;
@@ -37,17 +44,25 @@ public class Carte extends JLabel {
 	
 	private Point pointProche;
 	
-	private ArrayList<Point> ensemblePoint;
+	private ArrayList<Point> trajet;
 	
-	private boolean pointUnique;
+	private boolean pointUnique,drawPath;
 	
-	public Carte(ImageIcon lienCarte)
+	private Icon map;
+	
+	private String lien;
+	
+	public Carte(String lienCarte)
 	{
-		this.setIcon(lienCarte);
-		ensemblePoint=new ArrayList<Point>();
-		System.out.println(lienCarte);
-		this.repaint();
+		zoom=(float) 0.5;
+		lien=lienCarte;
+		map=new ImageIcon(lien);
+		trajet=new ArrayList<Point>();
 		menu=new JPopupMenu();
+		hauteur=(int) ((float)map.getIconHeight()*zoom);
+		largeur=(int)((float)map.getIconWidth()*zoom);
+		Icon icon = new ImageIcon(new ImageIcon(lien).getImage().getScaledInstance((int)(largeur), (int)(hauteur), Image.SCALE_DEFAULT));
+		this.setIcon(icon);
 	
 	}
 	
@@ -66,13 +81,14 @@ public class Carte extends JLabel {
 	
 	public void ajouterPoint(Point nodeCoords)
 	{
-		ensemblePoint.add(nodeCoords);
+		trajet.add(nodeCoords);
 		
 	}
 
 	public void viderPoints() 
 	{
-		ensemblePoint.clear();
+		trajet.clear();
+		drawPath=false;
 		
 	}
 
@@ -85,7 +101,7 @@ public class Carte extends JLabel {
 
 	public void setMaxUnitIncrement(float pourcentage_zoom) 
 	{
-		zoom=pourcentage_zoom;
+		coefZoom=pourcentage_zoom;
 		
 	}
 
@@ -123,35 +139,14 @@ public class Carte extends JLabel {
 		doneePointProche=string;
 	}
 
-	public void updateZoom(float pourcentage_zoom)
+	/*public void updateZoom(float pourcentage_zoom)
 	{
-		coefZoom=zoom/pourcentage_zoom;
-		hauteur=(int) (this.getHeight()*coefZoom);
-		largeur=(int)(this.getWidth()*coefZoom);
+		hauteur=(int) ((float)map.getIconHeight()*pourcentage_zoom);
+		largeur=(int)((float)map.getIconWidth()*pourcentage_zoom);
+		Icon icon = new ImageIcon(new ImageIcon(lien).getImage().getScaledInstance((int)(largeur), (int)(hauteur), Image.SCALE_DEFAULT));
+		this.setIcon(icon);
+		this.repaint();
 		
-		this.setSize(largeur,hauteur);
-	}
-
-	public void afficherMenu() 
-	{
-		menu.setVisible(true);
-		menu.setLocation(pointProche);
-		menu.setLabel(doneePointProche);;
-	}
-	
-	public void cacherMenu() 
-	{
-		
-		menu.setVisible(false);
-	}
-
-	/*public void changerAntiAliasing() 
-	{
-		java.awt.Graphics2D g2 = (java.awt.Graphics2D);
-		    RenderingHints rh = new RenderingHints(
-		             RenderingHints.KEY_TEXT_ANTIALIASING,
-		             RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		    g2.setRenderingHints(rh);
 	}*/
 
 	public int getLargeur() {
@@ -175,5 +170,51 @@ public class Carte extends JLabel {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//surcharge de la fonction paint pour dessiner tous les elements de la carte
+		public void paint(Graphics g){
+			Graphics2D graph = (Graphics2D)g;
+
+			//appliquer le zoom sur le graphique
+			graph.scale(zoom, zoom);
+			
+			//dessiner la carte
+			map.paintIcon(this, graph, 0, 0);
+			//graph.drawImage(map.getImage(), 0, 0, this);
+			if(drawPath)
+				dessinerTrajet(graph);
+		
+		}
+		
+		public void drawPath(){
+			drawPath=true;
+		}
+
+		//dessiner le trajet sur un graphic
+		private void dessinerTrajet(Graphics2D graph){
+			for(int i=1;i<trajet.size();i++){
+				Point pt1=trajet.get(i-1);
+				Point pt2=trajet.get(i);
+				graph.setStroke(new BasicStroke(5));
+				graph.setColor(Color.RED);
+				graph.drawLine((int)pt1.getX(), (int)pt1.getY(), (int)pt2.getX(), (int)pt2.getY());
+			}
+			
+		}
+		
+		//changer le zoom sur la carte
+		public void updateZoom(float _zoom) {
+			zoom=(float) _zoom;
+			largeur=(int)(map.getIconWidth()*zoom);
+			hauteur=(int)(map.getIconHeight()*zoom);
+			this.setSize(largeur, hauteur);
+			this.setPreferredSize(new Dimension(largeur, hauteur));
+			repaint();
+		}
+
+		public float getZoom() {
+			// TODO Auto-generated method stub
+			return zoom;
+		}
 
 }

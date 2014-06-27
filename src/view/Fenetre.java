@@ -25,7 +25,7 @@ public class Fenetre extends JFrame{
 
 	public Fenetre(String lienCarte, String SYSTEME_UNITE)  {
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		setSize(720, 520);
+		setExtendedState(getExtendedState()|JFrame.MAXIMIZED_BOTH );
 		
 		panneauControles = new PanelControles();
 		getContentPane().add(panneauControles, BorderLayout.SOUTH);
@@ -57,10 +57,10 @@ public class Fenetre extends JFrame{
 		return panneauInfo;
 	}
 	
-	public static void main(String args[])
+	/*public static void main(String args[])
 	{
 		String lienCarte = "region_belfort_routes_fleuves_habitats.gif";
 		Fenetre fenetre = new Fenetre(lienCarte, SYSTEME_UNITE);
 		fenetre.setVisible(true);
-	}
+	}*/
 }
